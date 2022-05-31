@@ -43,3 +43,21 @@ def supers_detail(request, pk):
     elif request.method == 'DELETE':
         supers.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+
+@api_view(['GET'])
+def lables_list(request):
+
+    supers = Super.objects.all()
+    custom_response_dictionary = {"Heros" == [], "Villans"==[]}
+
+    for supers in supers:
+        supers = Super.objects.filter(super_id=super.id)
+        super_serializer = SuperSerializer(super, many=True)
+
+        custom_response_dictionary[super.type] = {
+            "type": super.id,
+            "supers": super_serializer.data
+        }
+    return Response(custom_response_dictionary)
